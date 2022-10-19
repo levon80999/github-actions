@@ -43,7 +43,7 @@ jobs:
       - name: Run replica set
         run: |
             docker run --name mongodb1 -e MONGO_INITDB_DATABASE=unittest --detach mongo:5.0 mongod --replSet rs
-            until docker exec --tty mongodb1 mongo 127.0.0.1:27017 --eval "db.version()"; do
+            until docker exec --tty mongodb1 mongo 127.0.0.1:27017 --eval "db.runCommand({connectionStatus: 1, showPrivileges: false})"; do
             sleep 1
             done
 
