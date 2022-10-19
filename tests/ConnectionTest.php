@@ -9,8 +9,11 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase {
         $client = new MongoDB\Client(
             'mongodb://'.$host.'@27017/test?retryWrites=true&w=majority'
         );
-        $primary = $client->getManager()->getServers();
-        var_dump($primary);
-        $this->assertNotNull($primary);
+
+        $collection = $client->demo->beers;
+
+        $result = $collection->insertOne( [ 'name' => 'Hinterland', 'brewery' => 'BrewDog' ] );
+        var_dump($result->getInsertedId());
+        $this->assertNotNull($result->getInsertedId());
     }
 }
