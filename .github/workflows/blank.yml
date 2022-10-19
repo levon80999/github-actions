@@ -52,3 +52,5 @@ jobs:
       - name: Run replica set
         run: |
           ./vendor/bin/phpunit  --bootstrap vendor/autoload.php tests 
+        env:
+          MONGO_HOST: ggggg
