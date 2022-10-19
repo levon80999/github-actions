@@ -8,7 +8,7 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase {
         $client = new MongoDB\Client(
             'mongodb://'.getenv('MONGO_HOST').'@27017/test?retryWrites=true&w=majority'
         );
-        var_dump($client->getManager()->selectServer(new ReadPreference(ReadPreference::RP_PRIMARY)));die;
-        $this->assertNotNull($client);
+        $primary = $client->getManager()->selectServer(new ReadPreference(ReadPreference::RP_PRIMARY));
+        $this->assertNotNull($primary);
     }
 }
