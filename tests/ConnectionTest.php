@@ -7,7 +7,7 @@ class ConnectionTest extends \PHPUnit\Framework\TestCase {
     {
         $host = getenv('MONGO_HOST');
         $client = new MongoDB\Client(
-            'mongodb://'.$host.'@27017/test?retryWrites=true&w=majority'
+            'mongodb://localhost@27017/unittest'
         );
 
         $collection = $client->demo->beers;
