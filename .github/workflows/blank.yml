@@ -48,4 +48,4 @@ jobs:
         run: |
           ./vendor/bin/phpunit  --bootstrap vendor/autoload.php tests 
         env:
-          MONGO_HOST: mongodb1
+          MONGO_HOST: 0.0.0.0
