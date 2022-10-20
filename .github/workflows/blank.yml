@@ -18,7 +18,20 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    name: PHP v${{ matrix.php }} with Mongo v${{ matrix.mongodb }}
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      matrix:
+        include:
+          - { os: ubuntu-latest, php: 8.0, mongodb: '4.0', experimental: false }
+          - { os: ubuntu-latest, php: 8.0, mongodb: '4.2', experimental: false }
+          - { os: ubuntu-latest, php: 8.0, mongodb: '4.4', experimental: false }
+          - { os: ubuntu-latest, php: 8.0, mongodb: '5.0', experimental: false }
+          - { os: ubuntu-latest, php: 8.1, mongodb: '4.0', experimental: false }
+          - { os: ubuntu-latest, php: 8.1, mongodb: '4.2', experimental: false }
+          - { os: ubuntu-latest, php: 8.1, mongodb: '4.4', experimental: false }
+          - { os: ubuntu-latest, php: 8.1, mongodb: '5.0', experimental: false }
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -37,7 +50,7 @@ jobs:
       # Runs replset
       - name: Run replica set
         run: |
-            docker run --name mongodb -p 27017:27017 --detach mongo:5.0 mongod --replSet rs
+            docker run --name mongodb -p 27017:27017 --detach mongo:${{ matrix.mongodb }} mongod --replSet rs
             until docker exec --tty mongodb mongo 127.0.0.1:27017 --eval "db.runCommand({connectionStatus: 1, showPrivileges: false})"; do
             sleep 1
             done
